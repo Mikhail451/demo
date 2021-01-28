@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>For hero adding </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+
+    <form action="#" th:action="@{/heroes}" th:object="${hero}"  method="post">
+        <p>Rank: <input type="text" th:field="*{ranking}" />
+        <p>Hero Name: <input type="text" th:field="*{heroName}" />
+        <p>Abilities: <input type="text" th:field="*{abilities}" />
+       <p><input type="submit" value="Submit" />
+        <input type="reset" value="Reset" /></p>
+</form>
+<table>
+    <tr th:each="hero : ${heroes}">
+        <td>Rank: <span th:text="${hero.ranking}">  </span></td>
+        <td>Ability: <span th:text="${hero.abilities}">  </span></td>
+        <td>Name: <span th:text="${hero.heroName}">  </span></td>
+        <td>Name: <span th:text="${hero.userName}">  </span></td>
+    </tr>
+    </table>
+
+</body>
+</html>

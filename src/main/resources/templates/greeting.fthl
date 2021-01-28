@@ -1,0 +1,7 @@
+
+<#import "templates/parts/common" as s>
+
+<@s.page>
+
+hello there
+</@s.page>
