@@ -3,28 +3,54 @@
 <head>
     <title>For hero adding </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
 </head>
 <body>
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+<div th:insert="navbar :: copy"></div>
 
-    <form action="#" th:action="@{/heroes}" th:object="${hero}"  method="post">
-        <p>Rank: <input type="text" th:field="*{ranking}" />
-        <p>Hero Name: <input type="text" th:field="*{heroName}" />
-        <p>Abilities: <input type="text" th:field="*{abilities}" />
-       <p><input type="submit" value="Submit" />
+<div class="container mt-3">
+    <div align="left" style="vertical-align: top;">
+    <form  th:action="@{/heroes}" th:object="${hero}" enctype="multipart/form-data" method="post">
+        <div class="col-md-10"><label class="form-label">Rank: <input type="text" th:field="*{ranking}" class="form-control" th:errorclass="is-invalid"/> </label>
+            <div th:if="${#fields.hasErrors('ranking')}" th:errors="*{ranking}" class="text-danger help-block"> </div>
+        </div>
+        <div class="col-md-10"><label class="form-label">HeroName: <input type="text" th:field="*{heroName}" class="form-control" th:errorclass="is-invalid" /></label></div>
+        <div th:if="${#fields.hasErrors('heroName')}" th:errors="*{heroName}" class="text-danger help-block"> </div>
+        <div class="col-md-10"><label class="form-label">Abilities: <input type="text" th:field="*{abilities}" class="form-control" th:errorclass="is-invalid" /> </label></div>
+        <div th:if="${#fields.hasErrors('abilities')}" th:errors="*{abilities}" class="text-danger help-block"> </div>
+        <p>Photo: <input type="file" th:name="photo"  />
+        <p><input type="submit" value="Submit" />
         <input type="reset" value="Reset" /></p>
 </form>
-<table>
-    <tr th:each="hero : ${heroes}">
-        <td>Rank: <span th:text="${hero.ranking}">  </span></td>
-        <td>Ability: <span th:text="${hero.abilities}">  </span></td>
-        <td>Name: <span th:text="${hero.heroName}">  </span></td>
-        <td>Name: <span th:text="${hero.userName}">  </span></td>
-    </tr>
-    </table>
+    </div>
+    <form  th:action="@{/heroSearch}" th:object="${hero}" enctype="multipart/form-data" method="post">
+        <div align="right" style="vertical-align: top;">
+        <div class="mb-2" ><label class="form-label">Name for Search:<input type="text" th:field="*{heroName}" class="form-control" /></label></div>
+        <p><input type="submit" value="Search" />
+
+        <div th:each="hero : ${heroes}">
+        <div class="card my-3" style="width: 18rem;">
+        <div>Rank: <span th:text="${hero.ranking}">  </span></div>
+        <div>Ability: <span th:text="${hero.abilities}">  </span></div>
+        <div>Name: <span th:text="${hero.heroName}">  </span></div>
+         <div>Was added by: <span th:text="${hero.user}">  </span></div>
+        <div th:if="${hero.filename}">
+        <div> Photo:
+            <img th:src="@{/img/{filename}(filename = ${hero.filename})}" style="width:90px; height:90px"  > </span></div>
+        </div>
+        </div>
+        </div>
+    </div>
+    </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 </body>
 </html>

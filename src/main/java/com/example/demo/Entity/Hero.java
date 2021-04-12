@@ -2,19 +2,40 @@ package com.example.demo.Entity;
 
 import javax.persistence.*;
 
+
+import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Entity
 public class Hero {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     public Hero(){}
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
 
+
+    @NotEmpty(message = "Field HeroName should not be empty")
     private String heroName;
+    @NotBlank(message = "Field Abilities should not be empty")
+    @Size(min=2 ,message = "Length must be min 2 symbols")
     private String abilities;
+    @NotBlank(message = "Field Rank should not be empty")
     private String ranking;
+
+    private String filename;
 
 
 
@@ -22,11 +43,11 @@ public class Hero {
     @JoinColumn(name="user_id")
     private User editor;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,7 +83,7 @@ public class Hero {
         this.editor = editor;
     }
 
-    public String getUserName() {
+    public String getUser() {
         return editor!=null? getEditor().getUsername():"no user";
     }
 }
